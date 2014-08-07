@@ -19,8 +19,15 @@ public class Main implements IXposedHookZygoteInit, IXposedHookInitPackageResour
             return;
 
         XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res);
+        // Hide Wifi
         resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_wifi_in", modRes.fwd(R.drawable.wifi_activity));
         resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_wifi_inout", modRes.fwd(R.drawable.wifi_activity));
         resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_wifi_out", modRes.fwd(R.drawable.wifi_activity));
+
+        //Hide Mobile Data
+        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_in", modRes.fwd(R.drawable.wifi_activity));
+        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_inout", modRes.fwd(R.drawable.wifi_activity));
+        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_out", modRes.fwd(R.drawable.wifi_activity));
+        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_noinout", modRes.fwd(R.drawable.wifi_activity));
     }
 }

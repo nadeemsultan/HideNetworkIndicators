@@ -7,6 +7,7 @@ A small Xposed module that brings back the original Kitkat AOSP look on custom r
 This app requires the [Xposed Framework](http://repo.xposed.info/) and has no effect without it.
 
 ###Changelog
+* **1.1** : Hide Mobile Data Indicators
 * **1.0** : Initial Release
 
 ![](http://i.imgur.com/tCkqxHO.png?1)
