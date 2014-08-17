@@ -1,9 +1,11 @@
 package com.nadeemsultan.hidenetworkindicators;
 
-import android.content.res.XModuleResources;
+import android.view.View;
+import android.widget.ImageView;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
+import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 
 public class Main implements IXposedHookZygoteInit, IXposedHookInitPackageResources {
     private static String MODULE_PATH = null;
@@ -18,16 +20,16 @@ public class Main implements IXposedHookZygoteInit, IXposedHookInitPackageResour
         if (!resparam.packageName.equals("com.android.systemui"))
             return;
 
-        XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res);
-        // Hide Wifi
-        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_wifi_in", modRes.fwd(R.drawable.wifi_activity));
-        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_wifi_inout", modRes.fwd(R.drawable.wifi_activity));
-        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_wifi_out", modRes.fwd(R.drawable.wifi_activity));
-
-        //Hide Mobile Data
-        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_in", modRes.fwd(R.drawable.wifi_activity));
-        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_inout", modRes.fwd(R.drawable.wifi_activity));
-        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_out", modRes.fwd(R.drawable.wifi_activity));
-        resparam.res.setReplacement("com.android.systemui", "drawable", "stat_sys_signal_noinout", modRes.fwd(R.drawable.wifi_activity));
+        resparam.res.hookLayout("com.android.systemui", "layout", "signal_cluster_view", new XC_LayoutInflated() {
+            @Override
+            public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
+                ImageView wifi_inout = (ImageView) liparam.view.findViewById(
+                        liparam.res.getIdentifier("wifi_inout", "id", "com.android.systemui"));
+                wifi_inout.setVisibility(View.GONE);
+                ImageView mobile_inout = (ImageView) liparam.view.findViewById(
+                        liparam.res.getIdentifier("mobile_inout", "id", "com.android.systemui"));
+                mobile_inout.setVisibility(View.GONE);
+            }
+        }); 
     }
 }
