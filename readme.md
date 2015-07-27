@@ -7,6 +7,7 @@ A small Xposed module that brings back the original AOSP look on custom roms by 
 This app requires the [Xposed Framework](http://repo.xposed.info/) and has no effect without it.
 
 ###Changelog
+* **1.3.1** : Fix issue where mobile indicators were not being hidden.
 * **1.3** : Updated for Lollipop
 * **1.2** : New method of hiding indicators, should now have better compatibility on pre-4.4 roms
 * **1.1** : Hide Mobile Data Indicators

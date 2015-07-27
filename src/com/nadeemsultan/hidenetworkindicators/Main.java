@@ -30,6 +30,15 @@ public class Main implements IXposedHookZygoteInit, IXposedHookInitPackageResour
                         liparam.res.getIdentifier("mobile_inout", "id", "com.android.systemui"));
                 mobile_inout.setVisibility(View.GONE);
             }
-        }); 
+        });
+        
+        resparam.res.hookLayout("com.android.systemui", "layout", "mobile_signal_group", new XC_LayoutInflated() {
+            @Override
+            public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
+                ImageView mobile_inout = (ImageView) liparam.view.findViewById(
+                        liparam.res.getIdentifier("mobile_inout", "id", "com.android.systemui"));
+                mobile_inout.setVisibility(View.GONE);
+            }
+        });
     }
 }
